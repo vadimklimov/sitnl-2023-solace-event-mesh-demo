@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  dashboard:
+    container_name: dashboard
+    image: grafana/grafana-oss:10.1.5
+    volumes:
+      - dashboard_data:/var/lib/grafana
+    labels:
+      - 'name=Grafana dashboard'
+    depends_on:
+      - database
+  database:
+    container_name: database
+    image: postgres:15
+    env_file: database.env
+    volumes:
+      - database_data:/var/lib/postgresql/data
+    labels:
+      - 'name=PostgreSQL database'
+  subscriber-dashboard:
+    container_name: subscriber-dashboard
+    image: nodered/node-red:3.1
+    volumes:
+      - subscriber_dashboard_data:/data
+    labels:
+      - 'name=Node-RED flow'
+    depends_on:
+      - database
+      - broker-us
+
+volumes:
+  dashboard_data:
+  database_data:
+  subscriber_dashboard_data:

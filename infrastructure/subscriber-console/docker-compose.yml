@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  subscriber-console:
+    container_name: subscriber-console
+    image: vadimklimov/solace-subscriber-console-example:1.0.0
+    env_file: config.env
+    labels:
+      - 'name=Go console application'
+    depends_on:
+      - broker-eu

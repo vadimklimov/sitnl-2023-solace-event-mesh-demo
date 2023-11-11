@@ -1,0 +1,35 @@
+version: '3.8'
+
+x-broker: &broker
+  image: solace/solace-pubsub-standard:10.5
+  env_file: broker.env
+  shm_size: 1g
+  ulimits:
+    core: -1
+    nofile:
+      soft: 2448
+      hard: 10192
+  environment:
+    system_scaling_maxconnectioncount: 1000
+    system_scaling_maxqueuemessagecount: 100
+    messagespool_maxspoolusage: 1500
+
+services:
+  broker-eu:
+    <<: *broker
+    container_name: broker-eu
+    volumes:
+      - broker_eu_storage_group:/var/lib/solace
+    labels:
+      - 'name=Solace broker (EU)'
+  broker-us:
+    <<: *broker
+    container_name: broker-us
+    volumes:
+      - broker_us_storage_group:/var/lib/solace
+    labels:
+      - 'name=Solace broker (US)'
+
+volumes:
+  broker_eu_storage_group:
+  broker_us_storage_group:

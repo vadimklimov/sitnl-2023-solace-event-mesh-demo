@@ -1,0 +1,13 @@
+version: '3.8'
+name: sitnl
+
+include:
+  - path: ./tools/docker-compose.yml
+  - path: ./broker/docker-compose.yml
+  - path: ./publisher/docker-compose.yml
+  - path: ./subscriber-console/docker-compose.yml
+  - path: ./subscriber-dashboard/docker-compose.yml
+
+networks:
+  default:
+    name: sitnl

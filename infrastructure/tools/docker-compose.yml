@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  browser:
+    container_name: browser
+    image: kasmweb/chrome:1.14.0
+    env_file: browser.env
+    ports:
+      - '443:6901'
+    shm_size: 512m
+    labels:
+      - 'name=Chrome browser'
